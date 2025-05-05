@@ -53,11 +53,8 @@ const Login=()=>{
             />
             <br></br>
             <button type='submit'>Submit</button>
+            
             </form>
-           
-        <button onClick={()=>navigate("/signUp")} className='signUp'>
-        new here? go to signUp
-        </button>
         </>
     )
 }

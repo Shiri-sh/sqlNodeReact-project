@@ -24,7 +24,8 @@ const Home = () => {
     return (<>
         <>
             <h3>{user.name},Welcome back!</h3>
-            <button className="btnNav" onClick={() => navigate(`home`)}>showInfo</button> 
+            <button className="btnNav" onClick={() => navigate(`home`)}>showInfo</button>
+            <button className="btnNav" onClick={() => navigate(`albums`)}>Albums</button>
             <button className="btnNav" onClick={() => navigate(`todos`)}>Todos</button>
             <button className="btnNav" onClick={() => navigate(`posts`)}>Posts</button>
             <button onClick={logout}>log out</button>

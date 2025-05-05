@@ -8,17 +8,17 @@ const ContextUserProvider = ({children}) => {
 
     const [user, setUser] = useState({});
     const navigate = useNavigate();
-    const resetUser = () => {localStorage.setItem("currentUser", ""); setUser({})};
+     const resetUser = () => {localStorage.setItem("currentUser", ""); setUser({})};
 
-    useEffect(() => {
-        const idExist = JSON.parse(localStorage.getItem('currentUser'));
-        if ( idExist ) {
-          fetchUserDetails(idExist);
-        }
-        else{
-          navigate('/login');
-        }
-      },[]);
+    // useEffect(() => {
+    //     const idExist = JSON.parse(localStorage.getItem('currentUser'));
+    //     if ( idExist ) {
+    //       fetchUserDetails(idExist);
+    //     }
+    //     else{
+    //       navigate('/login');
+    //     }
+    //   },[]);
         
     const fetchUserDetails = async (idExist) => {
         try {
