@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const controller = require("../controllers/todoCon");
 
-router.get('/todo/:userId', async(req, res) => {
+router.get('/:userId', async(req, res) => {
     const userId=req.params.userId;
     console.log('user_id',userId);
     try{
@@ -18,14 +18,16 @@ router.get('/todo/:userId', async(req, res) => {
         res.status(500).json({message:"Error fetching data"});
     }
 });
-router.post('/todo/:userId',async(req,res)=>{
-    const newTodo=req.body
-    try{
-       
-    }
-    catch(err){
-        res.status(500).json({message:"Error fetching data"});
-    }
+router.post('/' , async(req,res)=>{
+    try {
+        // const id=req.params.userId;
+        const { user_id, title, completed } = req.body;
+        const newTodo = await controller.createPost(user_id, title, completed);
+        res.status(200).send(newTodo);
+      } catch (error) {
+        res.status(500).json({ error: "Failed to create todo" });
+      }
 })
+
 
 module.exports = router;

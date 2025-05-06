@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const controller = require("../controllers/userCon");
 // router.get('/user', async(req, res) => {res.send('Hello World!')});
-router.get("/users", async(req, res) => {
+router.get("/", async(req, res) => {
     const userName=req.query.userName
     const password=req.query.password
     if(userName && password){

@@ -9,5 +9,21 @@ async function getTodosOfUser(userId) {
         console.log(error);
     }
 }
-module.exports={getTodosOfUser};
+
+async function createTodo(user_id, title, completed) {
+    try {
+      const sqlQuery = `INSERT INTO todos (user_id, title, completed) VALUES (?, ?, ?)`;
+      const [result] = await pool.query(sqlQuery, [user_id, title, completed]);
+      const [rows] = await pool.query(`SELECT * FROM todos WHERE id = ?`, [result.insertId]);
+
+      if (rows.length > 0) {
+        return rows[0]; 
+      } else {
+        throw new Error('Post not found');
+      }
+    } catch (err) {
+      throw err;
+    }
+  }
+module.exports={getTodosOfUser,createTodo};
    

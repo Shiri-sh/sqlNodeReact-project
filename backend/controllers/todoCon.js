@@ -7,4 +7,11 @@ async function getTodosOfUser(userId) {
         console.log(error);
     }
 }
-module.exports={getTodosOfUser};
+async function createTodo(user_id, title, completed) {
+    try {
+       return await model.createPost(user_id, title, completed);
+    } catch (error) {
+        throw error;
+    }
+}
+module.exports={getTodosOfUser,createTodo};
