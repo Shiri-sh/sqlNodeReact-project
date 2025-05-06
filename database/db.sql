@@ -1,7 +1,7 @@
 
-!---DROP DATABASE IF EXISTS social_Life;
+DROP DATABASE IF EXISTS social_Life;
 
-!---CREATE DATABASE social_Life;
+CREATE DATABASE social_Life;
 
 USE social_Life;
 
@@ -10,10 +10,11 @@ CREATE TABLE Users (
   name VARCHAR(20),
   user_name VARCHAR(20) NOT NULL UNIQUE,
   email VARCHAR(50) NOT NULL,
-  phone VARCHAR(50)
+  phone VARCHAR(50)  
 );
 
 CREATE TABLE Passwords (
+ id INT PRIMARY KEY AUTO_INCREMENT,
  user_id INT,
  password VARCHAR(20) NOT NULL,
  FOREIGN KEY (user_id) REFERENCES users(id)
@@ -59,6 +60,13 @@ VALUES
 ('Ervin Howell', 'Antonette', 'Shanna@melissa.tv', '010-692-6593 x09125'),
 ('Clementine Bauch', 'Samantha', 'Nathan@yesenia.net', '1-463-123-4447'),
 ('Patricia Lebsack', 'Karianne', 'Julianne.OConner@kory.org', '493-170-9623 x156');
+INSERT INTO Passwords (user_id, password)
+VALUES
+    (1, '1234'),
+    (2, '5678'),
+    (3, '4321'),
+    (4, '8765'),
+    (5, '1111');
 
 INSERT INTO todos ( user_id, title, completed)
 VALUES ( 1, 'Buy fruits', 'false'),
@@ -82,11 +90,15 @@ VALUES (1, 'Someone', 'Nathan@yesenia.net', 'Nice post!'),
  (2, 'hii', 'Shanna@melissa.tv', 'good words!'),
  (3, 'hello', 'sarah@example.com', 'lovely words!');
 
-select *
-from users;
+-- select *
+-- from users;
 
-select *
-from todos
+-- select *
+-- from todos
+
+-- SELECT * 
+-- FROM users u inner join passwords p  on u.id=p.user_id inner join addresses a on u.id=a.user_id 
+-- WHERE user_name like 'slevi' AND password like '1234'
 
 
 
