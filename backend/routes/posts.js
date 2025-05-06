@@ -30,7 +30,7 @@ router.post('/' , async(req,res)=>{
     const { user_id, title, body } = req.body;
     try {
         const newPost = await controller.createPost(user_id, title, body);
-        res.status(200).send(newPost);
+        res.status(200).json(newPost);
       } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Failed to create post" });
@@ -43,12 +43,12 @@ router.put('/:id',async (req,res)=>{
         await controller.updatePost(id, user_id, title, body);
         const updatedPost = await controller.getPost(id);
         if (!updatedPost) {
-          return res.status(404).send({ error: "Post not found" });
+          return res.status(404).json({ error: "Post not found" });
         }
-        res.status(200).send(updatedPost);
+        res.status(200).json(updatedPost);
       } catch (error) {
         console.error(error);
-        res.status(500).send({ error: "Failed to update post" });
+        res.status(500).json({ error: "Failed to update post" });
       }
 })
 
