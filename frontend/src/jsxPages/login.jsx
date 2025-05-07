@@ -12,16 +12,16 @@ const Login=()=>{
     const HandleForm = async (event) => {
         event.preventDefault();
         try{
-            const myUser = await fetchData(`users?username=${userName}&website=${password}`); 
+            const myUser = await fetchData(`users?userName=${userName}&password=${password}`); 
             console.log(myUser);
-            if (!myUser[0]) {
+            if (!myUser) {
                  alert("User not found");
                  return;
             }
             else{
-                setUser(myUser[0]);
-                localStorage.setItem("currentUser", JSON.stringify(myUser[0].id));
-                navigate(`/users/${myUser[0].id}/home`);
+                setUser(myUser);
+                localStorage.setItem("currentUser", JSON.stringify(myUser.id));
+                navigate(`/users/${myUser.id}/home`);
             }
         }
          catch(error){

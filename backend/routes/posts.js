@@ -8,21 +8,27 @@ router.get('/', async(req, res) => {
     if(userId)
     {//all the posts by user
        try{
-        var posts= await controller.getTodosOfUser(userId)
+        var posts= await controller.getPostsOfUser(userId)
         res.status(200).json(posts);
         }
         catch(error){
-        res.status(500).json({message:"Error fetching data"});
+        res.status(500).json({error:"Error fetching data",message: error.message});
     } 
     }
     //all posts in db
     else{
         try{
             var posts=await controller.getAllPosts();
+            if(!posts){
+              res.status(404).json({message:"posts not found"});
+            }
+            else{
+                res.status(200).json(posts);
+            }
         }
         catch(error)
         {
-         res.status(500).json({})
+         res.status(500).json({error:"Error fetching data",message: error.message});
         }
     }
 });
@@ -33,32 +39,38 @@ router.post('/' , async(req,res)=>{
         res.status(200).json(newPost);
       } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Failed to create post" });
+        res.status(500).json({ error: "Failed to create post", message: error.message });
       }
 });
 router.put('/:id',async (req,res)=>{
     try {
         const id = req.params.id;
         const { user_id, title, body } = req.body;
-        await controller.updatePost(id, user_id, title, body);
-        const updatedPost = await controller.getPost(id);
+        const updatedPost = await controller.updatePost(id, user_id, title, body);
         if (!updatedPost) {
           return res.status(404).json({ error: "Post not found" });
         }
-        res.status(200).json(updatedPost);
+        else{
+          res.status(200).json(updatedPost);
+        }
       } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Failed to update post" });
+        res.status(500).json({ error: "Failed to update post" , message: error.message });
       }
 })
 router.delete('/:id',async (req,res)=>{
     try {
         const id = req.params.id;
-        await controller.deletePost(id);
-        res.status(200).json({ message: "Post deleted successfully!!!!!!!!!!!!" });
+        const deletedPost = await controller.deletePost(id);
+        if (!deletedPost) {
+          return res.status(404).json({ error: "Post not found" });
+        }
+        else{
+            res.status(200).json({ message: "Post deleted successfully!" });
+        }
       } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Failed to delete post" });
+        res.status(500).json({ error: "Failed to delete post" , message: error.message });
       }
 })
 module.exports = router;

@@ -1,5 +1,4 @@
-const model = require("../models/todoMod");
-const { get } = require("../routes/todos");
+const model = require("../models/postMod");
 
 async function getPostsOfUser(userId) {
     try {

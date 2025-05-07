@@ -4,7 +4,7 @@ async function getTodosOfUser(userId) {
     try {
        return await model.getTodosOfUser(userId);
     } catch (error) {
-        console.log(error);
+        throw error;
     }
 }
 async function createTodo(user_id, title, completed) {
@@ -21,4 +21,11 @@ async function deleteTodo(id) {
         throw error;
     }
 }
-module.exports={getTodosOfUser,createTodo,deleteTodo};
+async function updateTodo(id, title, completed) {
+    try {
+       return await model.updateTodo(id, title, completed);
+    } catch (error) {
+        throw error;
+    }
+}
+module.exports={getTodosOfUser,createTodo,deleteTodo,updateTodo};

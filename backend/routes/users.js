@@ -9,6 +9,7 @@ router.get("/", async(req, res) => {
         console.log('userName',userName,password);
         try{
             var user= await controller.getUserByUserNamePassword(userName, password)
+            console.log('user',user);
             if(!user){
                 res.status(404).json({message:"User not found"});
             }
@@ -24,9 +25,5 @@ router.get("/", async(req, res) => {
         res.status(400).json({message:"Bad request"});
     }
 });
-
-// router.get("/users/:id", controller.getUser);
-// router.put("/users/:id", controller.updateUser);
-// router.delete("/users/:id", controller.deleteUser);
 
 module.exports = router;
