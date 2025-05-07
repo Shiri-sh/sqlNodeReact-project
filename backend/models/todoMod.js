@@ -25,5 +25,18 @@ async function createTodo(user_id, title, completed) {
       throw err;
     }
   }
+  async function deleteTodo(id) {
+    try{
+        const delTodo = await pool.query(`DELETE FROM todos WHERE id = ?`, [id]);
+        if (delTodo[0].length === 0) {
+          const error = new Error("Todo not found");
+          error.status = 404;
+          throw error;
+        }
+        return delTodo[0];
+    } catch (err) {
+      throw err;
+    }
+  }
 module.exports={getTodosOfUser,createTodo};
    

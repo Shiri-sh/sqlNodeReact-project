@@ -29,5 +29,14 @@ router.post('/' , async(req,res)=>{
       }
 })
 
-
+router.delete('/:id',async (req,res)=>{
+    try {
+        const id = req.params.id;
+        await controller.deleteTodo(id);
+        res.status(200).json({ message: "Todo deleted successfully!!!!!!!!!!!!!" });
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Failed to delete todo" });
+      }
+})
 module.exports = router;

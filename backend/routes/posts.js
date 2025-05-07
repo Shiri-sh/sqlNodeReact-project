@@ -51,5 +51,14 @@ router.put('/:id',async (req,res)=>{
         res.status(500).json({ error: "Failed to update post" });
       }
 })
-
+router.delete('/:id',async (req,res)=>{
+    try {
+        const id = req.params.id;
+        await controller.deletePost(id);
+        res.status(200).json({ message: "Post deleted successfully!!!!!!!!!!!!!" });
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Failed to delete post" });
+      }
+})
 module.exports = router;

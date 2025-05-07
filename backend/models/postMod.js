@@ -45,5 +45,24 @@ async function createPost(user_id, title, body) {
       throw err;
     }
   }
-module.exports={getPostsOfUser,createPost,getAllPosts,updatePost};
+  async function deletePost(id) {
+    try {
+      const selComments= await pool.query( `SELECT * FROM comments WHERE post_id = ?`, [id]);
+      if(selComments.length>0)
+      {
+         await pool.query(`DELETE FROM comments WHERE post_id = ?`, [id]);
+      }
+       const delPost = await pool.query(`DELETE FROM posts WHERE id = ?`, [id]);
+       if (delPost[0].length === 0)
+        {
+        const error = new Error("Post not found");
+        error.status = 404;
+        throw error;
+        }
+      return delPost[0];
+    } catch (err) {
+      throw err;
+    }
+  }
+module.exports={getPostsOfUser,createPost,getAllPosts,updatePost,deletePost};
    

@@ -26,7 +26,15 @@ async function updatePost(id,user_id, title, body) {
     try {
        return await model.updatePost(id,user_id, title, body);
     } catch (error) {
+        
         throw error;
     }
 }
-module.exports={createPost,getPostsOfUser,getAllPosts,updatePost};
+async function deletePost(id) {
+    try {
+       return await model.deletePost(id);
+    } catch (error) {
+        throw error;
+    }
+}
+module.exports={createPost,getPostsOfUser,getAllPosts,updatePost,deletePost};
