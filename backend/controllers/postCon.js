@@ -8,8 +8,9 @@ async function getPostsOfUser(userId) {
     }
 }
 async function getAllPosts() {
+    console.log("i am in getAllPosts");
     try {
-       return await model.getPostsOfUser();
+       return await model.getAllPosts();
     } catch (error) {
         throw error;
     }

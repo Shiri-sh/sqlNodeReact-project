@@ -4,6 +4,7 @@ async function getPostsOfUser(userId) {
     try {
         const sql = 'SELECT id,title,body FROM posts WHERE user_id = ?';
         const [rows] = await con.query(sql, [userId]);
+        console.log("rows",rows);
         return rows;
     } catch (error) {
         throw error
@@ -13,6 +14,7 @@ async function getAllPosts() {
   try {
       const sql = 'SELECT id,title,body FROM posts';
       const [rows] = await con.query(sql);
+      console.log("rows",rows);
       return rows;
   } catch (error) {
       throw error;

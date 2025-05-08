@@ -3,12 +3,13 @@ const router = express.Router();
 const controller = require("../controllers/postCon");
 
 router.get('/', async(req, res) => {
-    const userId=req.query.userId;
+    const userId = req.query.userId;
     console.log('user_id',userId);
-    if(userId)
+    if(userId !== undefined)
     {//all the posts by user
        try{
-        var posts= await controller.getPostsOfUser(userId)
+        var posts= await controller.getPostsOfUser(userId);
+        console.log(posts);
         res.status(200).json(posts);
         }
         catch(error){
@@ -17,8 +18,10 @@ router.get('/', async(req, res) => {
     }
     //all posts in db
     else{
+      console.log("i am here");
         try{
-            var posts=await controller.getAllPosts();
+            var posts = await controller.getAllPosts();
+            console.log(posts);
             if(!posts){
               res.status(404).json({message:"posts not found"});
             }
@@ -42,7 +45,7 @@ router.post('/' , async(req,res)=>{
         res.status(500).json({ error: "Failed to create post", message: error.message });
       }
 });
-router.put('/:id',async (req,res)=>{
+router.patch('/:id',async (req,res)=>{
     try {
         const id = req.params.id;
         const { user_id, title, body } = req.body;

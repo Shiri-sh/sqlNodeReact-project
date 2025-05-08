@@ -22,17 +22,16 @@ const Todos = () => {
     async function getTodos() {
         let todos = await fetchData(`todos?userId=${user.id}`) || [];
         setData(todos);
-
     }
     function sortBy(a,b,sortType){
-        if(sortType === 'id') return a.id.localeCompare(b.id);
+        if(sortType === 'id') return a.id - b.id;
         if(sortType === 'alfabetical') return a.title.localeCompare(b.title);
         if(sortType === 'completed') return b.completed - a.completed;
         if(sortType === 'random') return Math.random() - Math.random();
     }
     const handleCheckboxToggle = async (todo) => {
         try {
-            let responseTodo = await fetchData(`todos/${todo.id}`, 'PATCH', { completed: !todo.completed }) || [];
+            let responseTodo = await fetchData(`todos/${todo.id}`, 'PATCH', { completed:todo.completed=='true'? false : true }) || [];
             console.log(responseTodo);
             setData(prevData => prevData.map(item => item.id === todo.id ? { ...item, completed: !item.completed } : item));
         }
@@ -72,7 +71,7 @@ const Todos = () => {
                         <div key={todo.id} className="line">
                             <input
                                 type="checkbox"
-                                checked={todo.completed}
+                                checked={todo.completed=='true'? true:false}
                                 onChange={() => handleCheckboxToggle(todo)}
 
                             />

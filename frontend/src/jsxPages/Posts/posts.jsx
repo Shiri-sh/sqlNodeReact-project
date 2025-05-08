@@ -26,13 +26,15 @@ const Posts=()=>{
     const [style, setStyle] = useState(null);
 
     async function getPosts() {
-        let posts = await fetchData(`posts`) || [];
+        let queryString = searchType === 'mine' ? `posts?userId=${user.id}` : 'posts';
+        let posts = await fetchData(queryString) || [];
         setData(posts);
+        console.log(data);
     }
     
     useEffect(() => {
         getPosts();
-    }, []);
+    }, [searchValue, searchType]);
     const showComments = (postId) => {
         if(showphotos === postId) return;
         navigate(`${postId}/comments`);
@@ -69,9 +71,9 @@ const Posts=()=>{
             <div className="container">
                 {data.filter((post)=>{
                     if (searchType === 'mine') {
-                        return post.userId === user.id;
+                        return Number(post.userId) === Number(user.id);
                     }
-                    return searchType == "all" || post[searchType] == searchValue
+                     return searchType == "all" || post[searchType] == searchValue
                 }
                 ).map((post) => {
                     const isSelected = selectedPost === post.id;
