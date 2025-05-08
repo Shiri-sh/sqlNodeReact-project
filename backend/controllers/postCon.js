@@ -22,14 +22,23 @@ async function createPost(user_id, title, body) {
         throw error;
     }
 }
-async function updatePost(id,user_id, title, body) {
+async function patchPost(id,updatefields) {
+    
     try {
-       return await model.updatePost(id,user_id, title, body);
+        if(Object.keys(updatefields)=='title')
+            return await model.updateTitlePost(id,Object.values(updatefields));
+    
+        else if(Object.keys(updatefields)=='body')
+            return await model.updateBodyPost(id,Object.values(updatefields));
+        else
+            throw new Error('Invalid fields to update');
+
     } catch (error) {
         
         throw error;
     }
 }
+
 async function deletePost(id) {
     try {
        return await model.deletePost(id);
@@ -37,4 +46,4 @@ async function deletePost(id) {
         throw error;
     }
 }
-module.exports={createPost,getPostsOfUser,getAllPosts,updatePost,deletePost};
+module.exports={createPost,getPostsOfUser,getAllPosts,deletePost,patchPost};

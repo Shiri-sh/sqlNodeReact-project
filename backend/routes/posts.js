@@ -48,8 +48,8 @@ router.post('/' , async(req,res)=>{
 router.patch('/:id',async (req,res)=>{
     try {
         const id = req.params.id;
-        const { user_id, title, body } = req.body;
-        const updatedPost = await controller.updatePost(id, user_id, title, body);
+        const updatefields = req.body;
+        const updatedPost = await controller.patchPost(id, updatefields);
         if (!updatedPost) {
           return res.status(404).json({ error: "Post not found" });
         }

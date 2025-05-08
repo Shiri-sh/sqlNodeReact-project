@@ -13,10 +13,8 @@ const Comments = () => {
         const { user } = useContext(ContextUser);
         const [data, setData] = useState([]);
         const [updateActivecommentId, setUpdateActivecommentId] = useState(null);
-    
         async function getComments() {
             let comments = await fetchData(`comments?postId=${postId}` ) || [];
-            comments= comments.filter(comment => comment.postId != null);
             setData(comments);
         }
 
@@ -42,6 +40,7 @@ const Comments = () => {
                 <AddComment setData={setData} />
             </>
         )
+        console.log('comments',data);
         return(
             <>
             <div className="comment">
@@ -50,7 +49,7 @@ const Comments = () => {
                     <div key={comment.id} className="line">
                         <strong>{comment.id}</strong>
                         <br/>
-                        <strong>{comment.name}</strong>
+                        <strong>{comment.title}</strong>
                         <br />
                            {comment.body}
                         <br />
@@ -61,7 +60,7 @@ const Comments = () => {
                                 <div>
                                     <Updatecomment
                                         setData={setData}
-                                        name={comment.name}
+                                        title={comment.title}
                                         id={comment.id}
                                         data={data}
                                         body={comment.body}

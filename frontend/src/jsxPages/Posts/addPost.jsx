@@ -1,7 +1,6 @@
 import React from "react";
 import { useState, useContext } from 'react'
 import '../../App.css'
-import fetchData from '../../service/FetchData.js'
 import  { ContextUser } from '../ContextUser'
 import handleAdd from "../../service/handleAdd.js";
 

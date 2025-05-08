@@ -31,9 +31,9 @@ const Todos = () => {
     }
     const handleCheckboxToggle = async (todo) => {
         try {
-            let responseTodo = await fetchData(`todos/${todo.id}`, 'PATCH', { completed:todo.completed=='true'? false : true }) || [];
+            let responseTodo = await fetchData(`todos/${todo.id}`, 'PATCH', { /*title: todo.title,*/ completed: todo.completed=='true'? 'false' : 'true' }) || [];
             console.log(responseTodo);
-            setData(prevData => prevData.map(item => item.id === todo.id ? { ...item, completed: !item.completed } : item));
+            setData(prevData => prevData.map(item => item.id === todo.id ? { ...item, completed: todo.completed=='true'? 'false' : 'true' } : item));
         }
         catch (e) { console.error('Error fetching:', e); }
     }

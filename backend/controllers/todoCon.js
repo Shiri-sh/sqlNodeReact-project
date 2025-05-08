@@ -21,11 +21,17 @@ async function deleteTodo(id) {
         throw error;
     }
 }
-async function updateTodo(id, title, completed) {
+
+async function patchTodo(id, fieldsToUpdate) {
+   
     try {
-       return await model.updateTodo(id, title, completed);
-    } catch (error) {
+       if(Object.keys(fieldsToUpdate)=='completed') return await model.updateCompletedTodo(id, Object.values(fieldsToUpdate));
+
+       else return await model.updateTitleTodo(id, Object.values(fieldsToUpdate));
+    }
+    catch(error){
         throw error;
     }
+
 }
-module.exports={getTodosOfUser,createTodo,deleteTodo,updateTodo};
+module.exports={getTodosOfUser,createTodo,deleteTodo,patchTodo};

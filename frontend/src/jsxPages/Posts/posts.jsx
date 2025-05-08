@@ -27,9 +27,11 @@ const Posts=()=>{
 
     async function getPosts() {
         let queryString = searchType === 'mine' ? `posts?userId=${user.id}` : 'posts';
+        console.log('queryString',queryString);
+        console.log('searchType',searchType);
         let posts = await fetchData(queryString) || [];
         setData(posts);
-        console.log(data);
+        console.log(posts);
     }
     
     useEffect(() => {
@@ -42,6 +44,8 @@ const Posts=()=>{
     };
 
     const access_permission=(userId,action,id)=>{
+        console.log('userId',userId);
+        console.log('user.id',user.id);
         if(userId!=user.id) {
             alert(`you can't ${action} others posts`);
         }
@@ -52,7 +56,7 @@ const Posts=()=>{
             handleDelete(id, setData, 'posts');
         }
     }
-
+    console.log('data',data);
     return(
         <>
         <h1>Posts</h1>
@@ -70,9 +74,6 @@ const Posts=()=>{
              />
             <div className="container">
                 {data.filter((post)=>{
-                    if (searchType === 'mine') {
-                        return Number(post.userId) === Number(user.id);
-                    }
                      return searchType == "all" || post[searchType] == searchValue
                 }
                 ).map((post) => {
@@ -90,8 +91,8 @@ const Posts=()=>{
                                 <>
                                 <button className="btnNav" onClick={() => {setSelectedPost(null); setStyle(null);navigate(".")}}>Deselect</button>
                                 <br/>
-                                <button onClick={() => access_permission(post.userId,'delete',post.id)}>Delete</button>
-                                <button onClick={() => access_permission(post.userId,'edit',post.id)}>Edit Content</button>
+                                <button onClick={() => access_permission(post.user_id,'delete',post.id)}>Delete</button>
+                                <button onClick={() => access_permission(post.user_id,'edit',post.id)}>Edit Content</button>
                                 <button onClick={() => showComments(post.id)}>Show Comments</button>
                                 <button onClick={() => setShowBody(post.id)}>Show body</button>
 

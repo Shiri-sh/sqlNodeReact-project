@@ -2,9 +2,9 @@ var con=require('../../database/db');
 
 async function getCommentsOfPost(post_id){
     try {
-        const sql = 'SELECT title,email,body FROM comments WHERE post_id = ?';
+        const sql = 'SELECT * FROM comments WHERE post_id = ?';
         const [rows] = await con.query(sql, [post_id]);
-        return rows[0];
+        return rows;
     } catch (error) {
         throw error;
     }
@@ -20,13 +20,24 @@ async function createComment(post_id, title, email, body) {
     }
     
 }
-async function updateComment(title, body) {
+async function updateTitleComment(id, title) {
     try {
-        const sqlQuery = `UPDATE comments SET title = ?, body = ? WHERE id = ?`;
-        const [result] = await con.query(sqlQuery, [title, body]);
-        return result[0];
+        const sqlQuery = `UPDATE comments SET title = ? WHERE id = ?`;
+        const [result] = await con.query(sqlQuery, [title, id]);
+        const [rows] = await con.query(`SELECT * FROM comments WHERE id = ?`, [id]);
+        return rows[0];
     } catch (err) {
         throw err;
     }
 }
-module.exports={getCommentsOfPost,createComment,updateComment};
+async function updateBodyComment(id, body) {
+    try {
+        const sqlQuery = `UPDATE comments SET body = ? WHERE id = ?`;
+        const [result] = await con.query(sqlQuery, [body, id]);
+        const [rows] = await con.query(`SELECT * FROM comments WHERE id = ?`, [id]);
+        return rows[0];
+    } catch (err) {
+        throw err;
+    }
+}
+module.exports={getCommentsOfPost,createComment,updateTitleComment,updateBodyComment};

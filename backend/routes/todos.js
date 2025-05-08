@@ -50,22 +50,22 @@ router.delete('/:id',async (req,res)=>{
       }
 })
 
-router.put('/:id',async (req,res)=>{
+router.patch('/:id', async (req, res) => {
     try {
-        const id = req.params.id;
-        const { title, completed } = req.body;
-
-        const updatedTodo = await controller.updateTodo(id, title, completed);
-        
-        if (!updatedTodo) {
-          return res.status(404).json({ error: "TODO not found" });
-        }
-        else{
-            res.status(200).json(updatedTodo);
-        }
-      } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Failed to update post" });
+      const id = req.params.id;
+      const fieldsToUpdate = req.body; 
+  
+      const updatedTodo = await controller.patchTodo(id, fieldsToUpdate);
+      console.log('updatedTodo', updatedTodo);
+  
+      if (!updatedTodo) {
+        return res.status(404).json({ error: "TODO not found" });
+      } else {
+        res.status(200).json(updatedTodo);
       }
-})
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Failed to patch todo", message: error.message });
+    }
+  });
 module.exports = router;

@@ -16,9 +16,17 @@ async function createComment(post_id, title, email, body){
     }
 }
 
-async function updateComment(title, body){
+async function patchComment(id,updatefields){
     try {
-        return await model.updateComment(title, body);
+        if(Object.keys(updatefields)=='title'){
+            return await model.updateTitleComment(id,Object.values(updatefields));
+        }
+        else if(Object.keys(updatefields)=='body'){
+            return await model.updateBodyComment(id,Object.values(updatefields));
+        }
+        else{
+            throw new Error('Invalid fields to update');
+        }
     } catch (error) {
         throw error;
     }
@@ -35,6 +43,6 @@ async function deleteComment(id){
 module.exports = {
     getCommentsOfPost,
     createComment,
-    updateComment,
+    patchComment,
     deleteComment
 }

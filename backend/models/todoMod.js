@@ -33,14 +33,28 @@ async function createTodo(user_id, title, completed) {
       throw err;
     }
   }
-  async function updateTodo(id, title, completed) {
-    try {
-      const sqlQuery = `UPDATE todos SET title = ?, completed = ? WHERE id = ?`;
-      const [result] = await con.query(sqlQuery, [title, completed, id]);
-      return result[0];
+
+async function updateTitleTodo(id, title) {
+   try {
+      const sqlQuery = `UPDATE todos SET title = ? WHERE id = ?`;
+      const [result] = await con.query(sqlQuery, [title, id]);
+      
+      const [rows] = await con.query(`SELECT * FROM todos WHERE id = ?`, [id]);
+      return rows[0];
     } catch (err) {
       throw err;
     }
-  }
-module.exports={getTodosOfUser,createTodo,deleteTodo,updateTodo};
+}
+async function updateCompletedTodo(id, completed) {
+    try {
+       const sqlQuery = `UPDATE todos SET completed = ? WHERE id = ?`;
+       const [result] = await con.query(sqlQuery, [completed, id]);
+       
+       const [rows] = await con.query(`SELECT * FROM todos WHERE id = ?`, [id]);
+       return rows[0];
+     } catch (err) {
+       throw err;
+     }
+}
+module.exports={getTodosOfUser,createTodo,deleteTodo,updateCompletedTodo,updateTitleTodo};
    

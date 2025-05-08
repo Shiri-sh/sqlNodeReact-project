@@ -12,7 +12,7 @@ async function getPostsOfUser(userId) {
 }
 async function getAllPosts() {
   try {
-      const sql = 'SELECT id,title,body FROM posts';
+      const sql = 'SELECT * FROM posts';
       const [rows] = await con.query(sql);
       console.log("rows",rows);
       return rows;
@@ -30,17 +30,27 @@ async function createPost(user_id, title, body) {
       throw err;
     }
   }
-  async function updatePost(id,user_id, title, body) {
+async function updateTitlePost(id, title) {
     try {
-      const sqlQuery = `UPDATE  posts SET user_id = ?, title = ?, body = ? WHERE postID = ?`;
-      const [result] = await con.query(sqlQuery, [user_id, title, body, id]);
-      const [rows] = await con.query(`SELECT * FROM posts WHERE id = ?`, [result.insertId]);
+      const sqlQuery = `UPDATE posts SET title = ? WHERE id = ?`;
+      const [result] = await con.query(sqlQuery, [title, id]);
+      const [rows] = await con.query(`SELECT * FROM posts WHERE id = ?`, [id]);
       return rows[0];
-    } 
-    catch (err) {
+    } catch (err) {
       throw err;
     }
-  }
+}
+async function updateBodyPost(id, body) {
+    try {
+      const sqlQuery = `UPDATE posts SET body = ? WHERE id = ?`;
+      const [result] = await con.query(sqlQuery, [body, id]);
+      const [rows] = await con.query(`SELECT * FROM posts WHERE id = ?`, [id]);
+      return rows[0];
+    } catch (err) {
+      throw err;
+    }
+  
+}
   async function deletePost(id) {
     try {
        await con.query( `DELETE FROM comments WHERE post_id = ?`, [id]);
@@ -50,5 +60,5 @@ async function createPost(user_id, title, body) {
       throw err;
     }
   }
-module.exports={getPostsOfUser,createPost,getAllPosts,updatePost,deletePost};
+module.exports={getPostsOfUser,createPost,getAllPosts,updateTitlePost,deletePost,updateBodyPost};
    

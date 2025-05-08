@@ -4,7 +4,6 @@ const controller = require("../controllers/commentCon");
 
 router.get('/', async(req, res) => {
     const postId=req.query.postId;
-    console.log('post_id',postId);
     try{
         var comments= await controller.getCommentsOfPost(postId)
         if(!comments){
@@ -18,11 +17,11 @@ router.get('/', async(req, res) => {
         res.status(500).json({message:"Error fetching data",message: error.message});
     }
 })
-router.put('/:id',async (req,res)=>{
+router.patch('/:id',async (req,res)=>{
     try {
         const id = req.params.id;
-        const { title, body } = req.body;
-        const updatedComment = await controller.updateComment(title, body);
+        const updatefields = req.body;
+        const updatedComment = await controller.patchComment(id, updatefields);
         if (!updatedComment) {
           return res.status(404).json({ error: "Comment not found" });
         }
