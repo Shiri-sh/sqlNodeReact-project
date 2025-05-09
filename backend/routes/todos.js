@@ -21,8 +21,10 @@ router.get('/', async(req, res) => {
 router.post('/' , async(req,res)=>{
     try {
         console.log('body',req.body);
-        const { user_id, title, completed } = req.body;
-        const newTodo = await controller.createTodo(user_id, title, completed);
+        const userId = req.query.userId;
+        console.log('user_id',userId);
+        const {title, completed } = req.body;
+        const newTodo = await controller.createTodo(userId, title, completed);
         if(!newTodo){
           return res.status(404).json({ error: "Todo not found" });
         }

@@ -8,5 +8,12 @@ async function getUserByUserNamePassword(userName, password) {
         console.log(error);
     }
 }
-
-module.exports={getUserByUserNamePassword};
+async function getUserById(id){
+    try{
+        return await model.getUserById(id);
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+module.exports={getUserByUserNamePassword,getUserById};

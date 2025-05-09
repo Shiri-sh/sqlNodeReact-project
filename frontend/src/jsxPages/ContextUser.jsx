@@ -10,20 +10,21 @@ const ContextUserProvider = ({children}) => {
     const navigate = useNavigate();
      const resetUser = () => {localStorage.setItem("currentUser", ""); setUser({})};
 
-    // useEffect(() => {
-    //     const idExist = JSON.parse(localStorage.getItem('currentUser'));
-    //     if ( idExist ) {
-    //       fetchUserDetails(idExist);
-    //     }
-    //     else{
-    //       navigate('/login');
-    //     }
-    //   },[]);
+    useEffect(() => {
+        const idExist = JSON.parse(localStorage.getItem('currentUser'));
+        if ( idExist ) {
+          fetchUserDetails(idExist);
+        }
+        else{
+          navigate('/login');
+        }
+      },[]);
         
     const fetchUserDetails = async (idExist) => {
         try {
-            const DatailsUser = await fetchData(`users?id=${idExist}`);
-            setUser(DatailsUser[0]);
+            const DatailsUser = await fetchData(`users/${idExist}`);
+            setUser(DatailsUser);
+            console.log(DatailsUser);
         } catch (error) {
             navigate('/login');
             alert('Error fetching user details:', error);

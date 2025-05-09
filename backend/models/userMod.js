@@ -10,4 +10,14 @@ async function getUserByUserNamePassword(userName, password) {
         console.log(error);
     }
 }
-module.exports = {getUserByUserNamePassword};
+async function getUserById(id) {
+    try{
+        const sql = 'SELECT * FROM users WHERE id = ?';
+        const [rows] =  await con.query(sql, [id]);
+        return rows[0];
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+module.exports = {getUserByUserNamePassword,getUserById};

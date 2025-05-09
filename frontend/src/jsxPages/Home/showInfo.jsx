@@ -9,11 +9,12 @@ const ShowInfo=()=>{
     return(
         <div>
               {Object.entries(user).map(([key, value]) => {
-                if (key === "website") return null;
+                if (key === "password") return null;
+                if(key==='user_id') return null;
                 return (
                     <ul key={key}>
                         <strong>{key}:</strong>
-                        {typeof value === 'object' ? (
+                        {/* {typeof value === 'object' ? (
                             <ul>
                                 {Object.entries(value).map(([subKey, subValue]) => (
                                     <li key={[key, subKey]}>
@@ -31,7 +32,8 @@ const ShowInfo=()=>{
                             </ul>
                         ) : (
                             <>{String(value)} </>
-                        )}
+                        )} */}
+                        <>{String(value)}</>
                     </ul>
                 );
             })}

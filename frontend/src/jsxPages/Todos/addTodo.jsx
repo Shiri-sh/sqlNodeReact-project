@@ -6,7 +6,7 @@ import handleAdd from "../../service/handleAdd";
 
 const AddTodo = ({ setData }) => {
     const { user } = useContext(ContextUser);
-    const [newData, setNewData] = useState({ userId: user.id, title: "", completed: false });
+    const [newData, setNewData] = useState({ title: "", completed: false });
     const handleSubmit = (e) => {
         e.preventDefault();
         handleAdd(setData, `todos?userId=${user.id}`, newData);

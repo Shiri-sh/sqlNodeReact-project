@@ -21,6 +21,7 @@ const Todos = () => {
 
     async function getTodos() {
         let todos = await fetchData(`todos?userId=${user.id}`) || [];
+        console.log(todos);
         setData(todos);
     }
     function sortBy(a,b,sortType){
@@ -39,8 +40,9 @@ const Todos = () => {
     }
 
     useEffect(() => {
-        getTodos();
-    }, []);
+        if(user?.id)
+         getTodos();
+    }, [user.id]);
 
     console.log(user.id);
     console.log(data);

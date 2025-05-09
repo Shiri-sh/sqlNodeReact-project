@@ -25,5 +25,19 @@ router.get("/", async(req, res) => {
         res.status(400).json({message:"Bad request"});
     }
 });
-
+router.get("/:id", async(req, res) => {
+    const id = req.params.id;
+    try{
+        var user= await controller.getUserById(id)
+        if(!user){
+            res.status(404).json({message:"User not found"});
+        }
+        else{
+            res.status(200).json(user);
+        }
+    }
+    catch(error){
+        res.status(500).json({message:"Error fetching data"});
+    }
+});
 module.exports = router;
