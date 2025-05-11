@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const controller = require("../controllers/userCon");
-// router.get('/user', async(req, res) => {res.send('Hello World!')});
 router.get("/", async(req, res) => {
     const userName=req.query.userName
     const password=req.query.password
@@ -11,14 +10,14 @@ router.get("/", async(req, res) => {
             var user= await controller.getUserByUserNamePassword(userName, password)
             console.log('user',user);
             if(!user){
-                res.status(404).json({message:"User not found"});
+               res.status(404).json({error:"User not found!" });
             }
             else{
                 res.status(200).json(user);
             }
         }
         catch(error){
-            res.status(500).json({message:"Error fetching data"});
+            res.status(500).json({error:"Failed to fetch user",message: error.message});
         }
     }
     else{
@@ -30,14 +29,14 @@ router.get("/:id", async(req, res) => {
     try{
         var user= await controller.getUserById(id)
         if(!user){
-            res.status(404).json({message:"User not found"});
+            res.status(404).json({error:"User not found"});
         }
         else{
             res.status(200).json(user);
         }
     }
     catch(error){
-        res.status(500).json({message:"Error fetching data"});
+        res.status(400).json({error:"Failed to fetch user"});
     }
 });
 module.exports = router;

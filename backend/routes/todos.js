@@ -8,14 +8,14 @@ router.get('/', async(req, res) => {
     try{
         var todos= await controller.getTodosOfUser(userId)
         if(!todos){
-            res.status(404).json({message:"todos not found"});
+            res.status(404).json({message:"Todos not found"});
         }
         else{
             res.status(200).json(todos);
         }
     }
     catch(error){
-        res.status(500).json({message:"Error fetching data",message: error.message});
+        res.status(500).json({message:"Failed to fech todo"});
     }
 });
 router.post('/' , async(req,res)=>{
@@ -32,7 +32,7 @@ router.post('/' , async(req,res)=>{
             res.status(200).send(newTodo);
         }
       } catch (error) {
-        res.status(500).json({ error: "Failed to create todo" , message: error.message });
+        res.status(500).json({ error: "Failed to create todo"});
       }
 })
 
@@ -48,7 +48,7 @@ router.delete('/:id',async (req,res)=>{
         }
       } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Failed to delete todo" , message: error.message });
+        res.status(500).json({ error: "Failed to delete todo"});
       }
 })
 
@@ -61,13 +61,13 @@ router.patch('/:id', async (req, res) => {
       console.log('updatedTodo', updatedTodo);
   
       if (!updatedTodo) {
-        return res.status(404).json({ error: "TODO not found" });
+        return res.status(404).json({ error: " Todo not found" });
       } else {
         res.status(200).json(updatedTodo);
       }
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: "Failed to patch todo", message: error.message });
+      res.status(500).json({ error: "Failed to patch todo"});
     }
   });
 module.exports = router;

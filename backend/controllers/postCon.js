@@ -34,7 +34,6 @@ async function patchPost(id,updatefields) {
             throw new Error('Invalid fields to update');
 
     } catch (error) {
-        
         throw error;
     }
 }

@@ -27,7 +27,7 @@ const Todos = () => {
     function sortBy(a,b,sortType){
         if(sortType === 'id') return a.id - b.id;
         if(sortType === 'alfabetical') return a.title.localeCompare(b.title);
-        if(sortType === 'completed') return b.completed - a.completed;
+        if(sortType === 'completed') return(b.completed === 'true') - (a.completed === 'true');;
         if(sortType === 'random') return Math.random() - Math.random();
     }
     const handleCheckboxToggle = async (todo) => {
@@ -61,8 +61,8 @@ const Todos = () => {
              />
             <div className="container">
                 {data.sort((a, b) => sortBy(a, b, sortType)).filter((todo) => {
-                    if(searchType==='completed') return todo.completed==true;
-                    if(searchType==='uncompleted') return todo.completed==false;
+                    if(searchType==='completed') return todo.completed=='true';
+                    if(searchType==='uncompleted') return todo.completed=='false';
 
                     return searchType == "all" || todo[searchType] == searchValue
                 }

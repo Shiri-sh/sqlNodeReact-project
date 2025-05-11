@@ -14,19 +14,14 @@ const Login=()=>{
         try{
             const myUser = await fetchData(`users?userName=${userName}&password=${password}`); 
             console.log(myUser);
-            if (!myUser) {
-                 alert("User not found");
-                 return;
-            }
-            else{
                 setUser(myUser);
                 localStorage.setItem("currentUser", JSON.stringify(myUser.id));
                 navigate(`/users/${myUser.id}/home`);
-            }
         }
          catch(error){
-                console.error('Error fetching:', error);
-                alert('Error fetching data');
+
+                // console.error('Error fetching:', error);
+                alert(error);
                 return;
          }
         

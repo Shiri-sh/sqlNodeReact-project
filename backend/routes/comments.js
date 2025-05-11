@@ -29,7 +29,7 @@ router.patch('/:id',async (req,res)=>{
           res.status(200).json(updatedComment);
         }
       } catch (error) {
-        res.status(500).json({ error: "Failed to update comment" , message: error.message });
+        res.status(500).json({ error: "Failed to update comment"  });
       }
 })
 router.delete('/:id',async (req,res)=>{
@@ -44,14 +44,14 @@ router.delete('/:id',async (req,res)=>{
         }
       } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Failed to delete comment" , message: error.message });
+        res.status(500).json({ error: "Failed to delete comment" });
       }
 })
 router.post('/' , async(req,res)=>{
     try {
-        const post_id = req.query.post_id;
-        const { title, email, body } = req.body;
-        const newComment = await controller.createComment(post_id, title, email, body);
+        const post_id = req.query.postId;
+        const { name, email, body } = req.body;
+        const newComment = await controller.createComment(post_id, name, email, body);
         if(!newComment){
           return res.status(404).json({ error: "Comment not found" });
         }
@@ -60,7 +60,7 @@ router.post('/' , async(req,res)=>{
         }
       } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Failed to create comment" , message: error.message });
+        res.status(500).json({ error: "Failed to create comment" });
       }
 })
 

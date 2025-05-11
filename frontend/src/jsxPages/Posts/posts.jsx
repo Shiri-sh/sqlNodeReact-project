@@ -31,7 +31,6 @@ const Posts=()=>{
         console.log('searchType',searchType);
         let posts = await fetchData(queryString) || [];
         setData(posts);
-        console.log(posts);
     }
     
     useEffect(() => {
@@ -74,7 +73,7 @@ const Posts=()=>{
              />
             <div className="container">
                 {data.filter((post)=>{
-                     return searchType == "all" || post[searchType] == searchValue
+                    return (searchType === 'all') || (searchType === 'mine') || (post[searchType] == searchValue);
                 }
                 ).map((post) => {
                     const isSelected = selectedPost === post.id;

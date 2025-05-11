@@ -11,15 +11,14 @@ const ContextUserProvider = ({children}) => {
      const resetUser = () => {localStorage.setItem("currentUser", ""); setUser({})};
 
     useEffect(() => {
-        const idExist = JSON.parse(localStorage.getItem('currentUser'));
-        if ( idExist ) {
-          fetchUserDetails(idExist);
-        }
-        else{
-          navigate('/login');
-        }
-      },[]);
-        
+    const currentUser = localStorage.getItem('currentUser');
+    if (currentUser) {
+        const idExist = JSON.parse(currentUser);
+        fetchUserDetails(idExist);
+    } else {
+        navigate('/login');
+    }
+}, []);
     const fetchUserDetails = async (idExist) => {
         try {
             const DatailsUser = await fetchData(`users/${idExist}`);
@@ -27,7 +26,7 @@ const ContextUserProvider = ({children}) => {
             console.log(DatailsUser);
         } catch (error) {
             navigate('/login');
-            alert('Error fetching user details:', error);
+            alert(error);
         }
     };
     return (

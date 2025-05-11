@@ -40,4 +40,12 @@ async function updateBodyComment(id, body) {
         throw err;
     }
 }
-module.exports={getCommentsOfPost,createComment,updateTitleComment,updateBodyComment};
+  async function deleteComment(id) {
+    try {
+       const deleteCom = await con.query(`DELETE FROM comments WHERE id = ?`, [id]);
+       return deleteCom.affectedRows === 0 ? null : id;
+    } catch (err) {
+      throw err;
+    }
+  }
+module.exports={getCommentsOfPost,createComment,updateTitleComment,updateBodyComment,deleteComment};
